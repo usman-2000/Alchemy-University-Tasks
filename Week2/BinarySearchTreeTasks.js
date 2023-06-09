@@ -39,3 +39,23 @@ class Tree {
 }
 
 module.exports = Tree;
+
+// Your Goal: Modify Add Node
+// Modify the addNode function to also handle adding the first children of the root.
+
+class Tree {
+  constructor() {
+    this.root = null;
+  }
+  addNode(node) {
+    if (this.root === null) {
+      this.root = node;
+    } else if (this.root !== null && this.root.data > node.data) {
+      this.root.left = node;
+    } else {
+      this.root.right = node;
+    }
+  }
+}
+
+module.exports = Tree;
