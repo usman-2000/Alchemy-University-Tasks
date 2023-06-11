@@ -59,3 +59,27 @@ class Tree {
 }
 
 module.exports = Tree;
+
+// Your Goal: Generalize
+// Complete the function addNode so that it can handle adding nodes no matter how large the tree gets.
+
+
+class Tree {
+  constructor() {
+      this.root = null
+  }
+  addNode(node){
+      if(!this.root){
+          this.root = node
+          return;
+      }
+      let pointer = this.root
+      while(true){
+          if(node.data< pointer.data){
+              if()
+          }
+      }
+  }
+}
+
+module.exports = Tree;
