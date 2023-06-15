@@ -35,33 +35,43 @@ module.exports = MerkleTree;
 
 // For this stage you'll need to handle a single leaf node, two leaf nodes, four leaf nodes and eight leaf nodes.
 
-
 class MerkleTree {
-    constructor(leaves, concat) {
-        this.leaves = leaves
-        this.concat = concat
+  constructor(leaves, concat) {
+    this.leaves = leaves;
+    this.concat = concat;
+  }
+  // getRoot() {
+  //     // return this.concat(this.leaves[0],this.leaves[1])
+
+  //     let newArr = []
+  //     function makeHash(){
+  //         while(this.leaves){
+  //         newArr.push(this.concat(this.leaves[0], this.leaves[1]))
+  //         this.leaves.splice(0,2)
+  //         }
+  //         if(newArr.length !== 1){
+  //             this.leaves = newArr
+  //             makeHash()
+  //         }else{
+  //             break
+  //         }
+  //     }
+  //     return newArr[0]
+
+  // }
+
+  getRoot(leaves = this.leaves) {
+    if (leaves.length === 1) {
+      return leaves[0];
     }
-    getRoot() {
-        // return this.concat(this.leaves[0],this.leaves[1])
 
+    let layer = [];
 
-        let newArr = []
-        function makeHash(){
-            while(this.leaves){
-            newArr.push(this.concat(this.leaves[0], this.leaves[1]))
-            this.leaves.splice(0,2)
-            }
-            if(newArr.length !== 1){
-                this.leaves = newArr
-                makeHash()
-            }else{
-                break
-            }
-        }
-        return newArr[0]
-        
+    for (let i = 0; i < leaves.length; i += 2) {
+      layer.push(this.concat(leaves[i], leaves[i + 1]));
     }
-
+    return this.getRoot(layer);
+  }
 }
 
 module.exports = MerkleTree;
