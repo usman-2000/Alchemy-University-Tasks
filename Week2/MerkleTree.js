@@ -75,3 +75,48 @@ class MerkleTree {
 }
 
 module.exports = MerkleTree;
+
+// Odd Leaves
+// Trees are great! We  trees
+
+// Even when those trees happen to be a bit... odd.
+
+//  Your Goal: Handle Odd Number of Leaves
+// Let's consider what happens in the case of an odd number of leaves in a tree.
+
+// Any time that there is no right pair to an element, we're just going to want to carry that leaf one layer up:
+
+//     Root
+//     / \
+//    AB  C
+//   / \  |
+//   A B  C
+//  In this case we don't use the C node until we combine it with AB to create the Merkle Root. Let's handle this in our getRoot function.
+
+class MerkleTree {
+  constructor(leaves, concat) {
+    this.leaves = leaves;
+    this.concat = concat;
+  }
+
+  getRoot(leaves = this.leaves) {
+    if (leaves.length === 1) {
+      return leaves[0];
+    }
+
+    let layer = [];
+
+    for (let i = 0; i < leaves.length; i += 2) {
+      const left = leaves[i];
+      const right = leaves[i + 1];
+      if (right) {
+        layer.push(this.concat(left, right));
+      } else {
+        layer.push(left);
+      }
+    }
+    return this.getRoot(layer);
+  }
+}
+
+module.exports = MerkleTree;
