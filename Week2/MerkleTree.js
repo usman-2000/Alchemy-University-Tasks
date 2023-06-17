@@ -120,3 +120,52 @@ class MerkleTree {
 }
 
 module.exports = MerkleTree;
+
+// Add the getProof Method
+// Let's add a getProof method to our MerkleTree class. This function will take in an index of a leaf node and return a Merkle Proof.
+
+// The Merkle Proof will be an array of objects with the properties data (the hash) and left (a boolean indicating if the hash is on the left).
+
+class MerkleTree {
+  constructor(leaves, concat) {
+    this.leaves = leaves;
+    this.concat = concat;
+  }
+
+  getRoot(leaves = this.leaves) {
+    if (leaves.length === 1) {
+      return leaves[0];
+    }
+
+    let layer = [];
+
+    for (let i = 0; i < leaves.length; i += 2) {
+      const left = leaves[i];
+      const right = leaves[i + 1];
+      if (right) {
+        layer.push(this.concat(left, right));
+      } else {
+        layer.push(left);
+      }
+    }
+    return this.getRoot(layer);
+  }
+
+  getProof(index) {
+    let arr = [];
+    if (index % 2 === 0) {
+      arr.push({
+        data: this.leaves[index],
+        left: true,
+      });
+    } else {
+      arr.push({
+        data: this.leaves[index],
+        left: false,
+      });
+    }
+    return arr;
+  }
+}
+
+module.exports = MerkleTree;
